@@ -1,0 +1,315 @@
+==================
+Complete Frugal file example
+==================
+
+include "common.frugal"
+
+namespace go example
+namespace java com.example
+
+const i32 VERSION = 1
+const string SERVICE_NAME = "UserService"
+
+typedef i64 UserId (js.type="Long")
+
+enum UserStatus {
+  ACTIVE = 1,
+  INACTIVE = 2,
+  SUSPENDED = 3
+}
+
+struct User {
+  1: required UserId id,
+  2: required string name,
+  3: optional UserStatus status = UserStatus.ACTIVE,
+  4: optional list<string> tags
+}
+
+exception UserNotFound {
+  1: string message,
+  2: UserId userId
+}
+
+service UserService {
+  User getUser(1: UserId id) throws (1: UserNotFound notFound),
+  oneway void updateUserStatus(1: UserId id, 2: UserStatus status),
+  list<User> searchUsers(1: string query) (timeout="5000")
+}
+
+scope UserEvents prefix "user.{userId}" {
+  UserCreated: User,
+  UserUpdated: User,
+  UserDeleted: UserId
+}
+
+---
+
+(document
+  (header (include (literal_string)))
+  (header (namespace (namespace_scope) (identifier)))
+  (header (namespace (namespace_scope) (identifier)))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (integer))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (literal_string))))
+  (definition
+    (typedef_definition
+      (field_type (base_type))
+      (identifier)
+      (annotation
+        (annotation_list
+          (identifier)
+          (literal_string)))))
+  (definition
+    (enum_definition
+      (identifier)
+      (enum_body
+        (enum_field (identifier) (integer) (list_separator))
+        (enum_field (identifier) (integer) (list_separator))
+        (enum_field (identifier) (integer)))))
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type (identifier))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type (identifier))
+          (identifier)
+          (const_value (identifier))
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type
+            (container_type
+              (list_type (field_type (base_type)))))
+          (identifier)))))
+  (definition
+    (exception_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (identifier))
+          (identifier)))))
+  (definition
+    (service_definition
+      (identifier)
+      (service_body
+        (function_definition
+          (function_type (field_type (identifier)))
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (identifier))
+              (identifier)))
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (identifier))
+              (identifier)))
+          (list_separator))
+        (function_definition
+          (function_type)
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (identifier))
+              (identifier)
+              (list_separator))
+            (field
+              (field_id (integer))
+              (field_type (identifier))
+              (identifier)))
+          (list_separator))
+        (function_definition
+          (function_type
+            (field_type
+              (container_type
+                (list_type (field_type (identifier))))))
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (base_type))
+              (identifier)))
+          (annotation
+            (annotation_list
+              (identifier)
+              (literal_string)))))))
+  (definition
+    (scope_definition
+      (identifier)
+      (scope_prefix (literal_string))
+      (scope_body
+        (scope_operation
+          (identifier)
+          (field_type (identifier))
+          (list_separator))
+        (scope_operation
+          (identifier)
+          (field_type (identifier))
+          (list_separator))
+        (scope_operation
+          (identifier)
+          (field_type (identifier)))))))
+
+==================
+Comments and documentation
+==================
+
+service UserService {
+  User getUser(1: i32 id)
+}
+
+---
+
+(document
+  (definition
+    (service_definition
+      (identifier)
+      (service_body
+        (function_definition
+          (function_type (field_type (identifier)))
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (base_type))
+              (identifier))))))))
+
+==================
+Exception definitions
+==================
+
+exception UserNotFound {
+  1: string message
+}
+
+exception ValidationError {
+  1: required string field,
+  2: optional string message = "Validation failed"
+} (severity="high")
+
+---
+
+(document
+  (definition
+    (exception_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)))))
+  (definition
+    (exception_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type (base_type))
+          (identifier)
+          (const_value (literal_string))))
+      (annotation
+        (annotation_list
+          (identifier)
+          (literal_string))))))
+
+==================
+Union definitions
+==================
+
+union Value {
+  1: string stringValue,
+  2: i32 intValue,
+  3: bool boolValue
+}
+
+---
+
+(document
+  (definition
+    (union_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier))))))
+
+==================
+Floating point numbers
+==================
+
+const double PI = 3.14159
+const double E = 2.71828e0
+const double LARGE = 1.23e10
+const double SMALL = 4.56e-5
+
+---
+
+(document
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (double))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (double))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (double))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (double)))))

@@ -218,6 +218,10 @@
           "named": true
         },
         {
+          "type": "exception_definition",
+          "named": true
+        },
+        {
           "type": "scope_definition",
           "named": true
         },
@@ -231,6 +235,10 @@
         },
         {
           "type": "typedef_definition",
+          "named": true
+        },
+        {
+          "type": "union_definition",
           "named": true
         }
       ]
@@ -316,6 +324,29 @@
         },
         {
           "type": "list_separator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "exception_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "annotation",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "struct_body",
           "named": true
         }
       ]
@@ -761,6 +792,29 @@
     }
   },
   {
+    "type": "union_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "annotation",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "struct_body",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "\"",
     "named": false
   },
@@ -865,6 +919,10 @@
     "named": false
   },
   {
+    "type": "exception",
+    "named": false
+  },
+  {
     "type": "extends",
     "named": false
   },
@@ -966,6 +1024,10 @@
   },
   {
     "type": "typedef",
+    "named": false
+  },
+  {
+    "type": "union",
     "named": false
   },
   {

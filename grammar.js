@@ -54,6 +54,8 @@ module.exports = grammar({
       $.typedef_definition,
       $.enum_definition,
       $.struct_definition,
+      $.exception_definition,
+      $.union_definition,
       $.service_definition,
       $.scope_definition, // Frugal-specific
     ),
@@ -105,6 +107,26 @@ module.exports = grammar({
     ),
 
     struct_body: $ => repeat1($.field),
+
+    exception_definition: $ => seq(
+      'exception',
+      $.identifier,
+      optional($.annotation),
+      '{',
+      optional($.struct_body),
+      '}',
+      optional($.annotation),
+    ),
+
+    union_definition: $ => seq(
+      'union',
+      $.identifier,
+      optional($.annotation),
+      '{',
+      optional($.struct_body),
+      '}',
+      optional($.annotation),
+    ),
 
     field: $ => seq(
       optional($.field_id),
