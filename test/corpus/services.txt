@@ -1,0 +1,133 @@
+==================
+Simple service
+==================
+
+service UserService {
+  User getUser(1: i32 id)
+}
+
+---
+
+(document
+  (definition
+    (service_definition
+      (identifier)
+      (service_body
+        (function_definition
+          (function_type (field_type (identifier)))
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (base_type))
+              (identifier))))))))
+
+==================
+Service with oneway function
+==================
+
+service NotificationService {
+  oneway void sendNotification(1: string message)
+}
+
+---
+
+(document
+  (definition
+    (service_definition
+      (identifier)
+      (service_body
+        (function_definition
+          (function_type)
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (base_type))
+              (identifier))))))))
+
+==================
+Service with extends
+==================
+
+service UserService extends BaseService {
+  User getUser(1: i32 id)
+}
+
+---
+
+(document
+  (definition
+    (service_definition
+      (identifier)
+      (identifier)
+      (service_body
+        (function_definition
+          (function_type (field_type (identifier)))
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (base_type))
+              (identifier))))))))
+
+==================
+Service with throws
+==================
+
+service UserService {
+  User getUser(1: i32 id) throws (1: UserNotFound notFound)
+}
+
+---
+
+(document
+  (definition
+    (service_definition
+      (identifier)
+      (service_body
+        (function_definition
+          (function_type (field_type (identifier)))
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (base_type))
+              (identifier)))
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (identifier))
+              (identifier))))))))
+
+==================
+Service with annotation
+==================
+
+service UserService (deprecated="true") {
+  User getUser(1: i32 id) (timeout="5000")
+}
+
+---
+
+(document
+  (definition
+    (service_definition
+      (identifier)
+      (annotation
+        (annotation_list
+          (identifier)
+          (literal_string)))
+      (service_body
+        (function_definition
+          (function_type (field_type (identifier)))
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (base_type))
+              (identifier)))
+          (annotation
+            (annotation_list
+              (identifier)
+              (literal_string))))))))

@@ -1,0 +1,122 @@
+==================
+Container types
+==================
+
+struct Example {
+  1: list<string> items,
+  2: set<i32> numbers,
+  3: map<string, User> users
+}
+
+---
+
+(document
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type
+            (container_type
+              (list_type (field_type (base_type)))))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type
+            (container_type
+              (set_type (field_type (base_type)))))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type
+            (container_type
+              (map_type 
+                (field_type (base_type))
+                (field_type (identifier)))))
+          (identifier))))))
+
+==================
+Typedef with annotation
+==================
+
+typedef i64 UserId (js.type="Long")
+
+---
+
+(document
+  (definition
+    (typedef_definition
+      (field_type (base_type))
+      (identifier)
+      (annotation
+        (annotation_list
+          (identifier)
+          (literal_string))))))
+
+==================
+Const with complex values
+==================
+
+const list<string> DEFAULT_TAGS = ["system", "default"]
+const map<string, i32> STATUS_CODES = {"ok": 200, "error": 500}
+
+---
+
+(document
+  (definition
+    (const_definition
+      (field_type
+        (container_type
+          (list_type (field_type (base_type)))))
+      (identifier)
+      (const_value
+        (const_list
+          (const_list_contents
+            (const_value (literal_string))
+            (list_separator)
+            (const_value (literal_string)))))))
+  (definition
+    (const_definition
+      (field_type
+        (container_type
+          (map_type
+            (field_type (base_type))
+            (field_type (base_type)))))
+      (identifier)
+      (const_value
+        (const_map
+          (const_map_contents
+            (const_value (literal_string))
+            (const_value (integer))
+            (list_separator)
+            (const_value (literal_string))
+            (const_value (integer))))))))
+
+==================
+Nested containers
+==================
+
+struct NestedData {
+  1: map<string, list<i32>> data
+}
+
+---
+
+(document
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type
+            (container_type
+              (map_type
+                (field_type (base_type))
+                (field_type
+                  (container_type
+                    (list_type (field_type (base_type))))))))
+          (identifier))))))

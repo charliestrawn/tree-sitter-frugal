@@ -1,0 +1,129 @@
+==================
+Scope with prefix
+==================
+
+scope Events prefix "events.{userId}" {
+  UserCreated: User,
+  UserUpdated: User,
+  UserDeleted: DeleteEvent
+}
+
+---
+
+(document
+  (definition
+    (scope_definition
+      (identifier)
+      (scope_prefix (literal_string))
+      (scope_body
+        (scope_operation
+          (identifier)
+          (field_type (identifier))
+          (list_separator))
+        (scope_operation
+          (identifier)
+          (field_type (identifier))
+          (list_separator))
+        (scope_operation
+          (identifier)
+          (field_type (identifier)))))))
+
+==================
+Simple scope without prefix
+==================
+
+scope SystemEvents {
+  ServerStarted: ServerInfo,
+  ServerStopped: void
+}
+
+---
+
+(document
+  (definition
+    (scope_definition
+      (identifier)
+      (scope_body
+        (scope_operation
+          (identifier)
+          (field_type (identifier))
+          (list_separator))
+        (scope_operation
+          (identifier)
+          (field_type (identifier)))))))
+
+==================
+Scope with annotations
+==================
+
+scope Events {
+  UserCreated: User (priority="high"),
+  UserUpdated: User (priority="medium")
+}
+
+---
+
+(document
+  (definition
+    (scope_definition
+      (identifier)
+      (scope_body
+        (scope_operation
+          (identifier)
+          (field_type (identifier))
+          (annotation
+            (annotation_list
+              (identifier)
+              (literal_string)))
+          (list_separator))
+        (scope_operation
+          (identifier)
+          (field_type (identifier))
+          (annotation
+            (annotation_list
+              (identifier)
+              (literal_string))))))))
+
+==================
+Scope with complex types
+==================
+
+scope DataEvents {
+  DataCreated: list<DataItem>,
+  DataUpdated: map<string, DataItem>
+}
+
+---
+
+(document
+  (definition
+    (scope_definition
+      (identifier)
+      (scope_body
+        (scope_operation
+          (identifier)
+          (field_type
+            (container_type
+              (list_type (field_type (identifier)))))
+          (list_separator))
+        (scope_operation
+          (identifier)
+          (field_type
+            (container_type
+              (map_type
+                (field_type (base_type))
+                (field_type (identifier))))))))))
+
+==================
+Empty scope
+==================
+
+scope EmptyEvents {
+}
+
+---
+
+(document
+  (definition
+    (scope_definition
+      (identifier))))

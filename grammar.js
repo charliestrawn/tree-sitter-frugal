@@ -224,7 +224,7 @@ module.exports = grammar({
     annotation_list: $ => repeat1(seq($.identifier, optional(seq('=', $.literal_string)), optional($.list_separator))),
 
     // Tokens
-    identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
+    identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*(\.[a-zA-Z_][a-zA-Z0-9_]*)*/,
     integer: $ => /-?[0-9]+/,
     double: $ => /-?[0-9]*\.[0-9]+([eE][+-]?[0-9]+)?/,
     literal_string: $ => choice(
