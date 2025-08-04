@@ -1,0 +1,125 @@
+==================
+Empty document
+==================
+
+---
+
+(document)
+
+==================
+Include statement
+==================
+
+include "common.frugal"
+
+---
+
+(document
+  (header
+    (include
+      (literal_string))))
+
+==================
+Namespace declaration
+==================
+
+namespace go example
+
+---
+
+(document
+  (header
+    (namespace
+      (namespace_scope)
+      (identifier))))
+
+==================
+Simple const
+==================
+
+const i32 MY_CONSTANT = 42
+
+---
+
+(document
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (integer)))))
+
+==================
+Simple enum
+==================
+
+enum Status {
+  ACTIVE = 1,
+  INACTIVE = 2
+}
+
+---
+
+(document
+  (definition
+    (enum_definition
+      (identifier)
+      (enum_body
+        (enum_field
+          (identifier)
+          (integer)
+          (list_separator))
+        (enum_field
+          (identifier)
+          (integer))))))
+
+==================
+Simple struct
+==================
+
+struct User {
+  1: required string name,
+  2: optional i32 age
+}
+
+---
+
+(document
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type (base_type))
+          (identifier))))))
+
+==================
+Frugal scope
+==================
+
+scope Events {
+  UserCreated: User,
+  UserUpdated: User
+}
+
+---
+
+(document
+  (definition
+    (scope_definition
+      (identifier)
+      (scope_body
+        (scope_operation
+          (identifier)
+          (field_type (identifier))
+          (list_separator))
+        (scope_operation
+          (identifier)
+          (field_type (identifier)))))))
