@@ -1,11 +1,12 @@
 ; Frugal syntax highlighting  
 ; Based on official Vim syntax and tree-sitter-thrift patterns
+; Updated for Neovim compatibility with specific capture groups
 
-; Keywords - namespace and include directives
+; Keywords - import and namespace directives  
 [
   "include"
   "namespace"
-] @include
+] @keyword.import
 
 ; Keywords - field qualifiers and modifiers
 [
@@ -13,7 +14,7 @@
   "optional" 
   "required"
   "oneway"
-] @keyword
+] @keyword.modifier
 
 ; Keywords - structural definitions
 [
@@ -25,13 +26,13 @@
   "service"
   "extends"
   "throws"
-] @keyword.function
+] @keyword.type
 
 ; Frugal-specific keywords
 [
   "scope"
   "prefix"
-] @keyword.function
+] @keyword.type
 
 ; Note: XSD attributes not implemented in current grammar
 
@@ -61,7 +62,7 @@
   "go"
   "js"
   "dart"
-] @tag
+] @module
 
 ; User-defined types (capitalized identifiers)
 ((identifier) @type
@@ -77,49 +78,49 @@
 
 ; Service names
 (service_definition
-  "service" @keyword
+  "service" @keyword.type
   (identifier) @type)
 
 ; Scope names (Frugal-specific)
 (scope_definition
-  "scope" @keyword
+  "scope" @keyword.type
   (identifier) @type)
 
 ; Enum names
 (enum_definition
-  "enum" @keyword
+  "enum" @keyword.type
   (identifier) @type)
 
 ; Struct names  
 (struct_definition
-  "struct" @keyword
+  "struct" @keyword.type
   (identifier) @type)
 
 ; Exception names
 (exception_definition
-  "exception" @keyword
+  "exception" @keyword.type
   (identifier) @type)
 
 ; Union names
 (union_definition
-  "union" @keyword
+  "union" @keyword.type
   (identifier) @type)
 
 ; Typedef names
 (typedef_definition
-  "typedef" @keyword
+  "typedef" @keyword.type
   (identifier) @type)
 
 ; Const names
 (const_definition
-  "const" @keyword
+  "const" @keyword.modifier
   (identifier) @constant)
 
 ; Field names
-(field (identifier) @field)
+(field (identifier) @property)
 
 ; Scope operation names (Frugal-specific)
-(scope_operation (identifier) @field)
+(scope_operation (identifier) @property)
 
 ; Enum field names
 (enum_field (identifier) @constant)
@@ -128,11 +129,11 @@
 (field_id (integer) @number)
 
 ; Function parameters
-(field_list (field (identifier) @parameter))
+(field_list (field (identifier) @variable.parameter))
 
 ; Annotation names and values
 (annotation_list (identifier) @attribute)
-(annotation_list (literal_string) @string.special)
+(annotation_list (literal_string) @string.documentation)
 
 ; Numbers
 (integer) @number
