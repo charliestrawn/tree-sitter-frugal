@@ -1,0 +1,17 @@
+==================
+CI trigger test
+==================
+
+// This is a simple test to trigger GitHub Actions
+
+const bool ENABLE_FEATURE = true
+
+---
+
+(document
+  (comment)
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (identifier)))))
