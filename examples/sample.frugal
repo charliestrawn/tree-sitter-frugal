@@ -1,0 +1,36 @@
+// Sample Frugal file demonstrating syntax highlighting
+
+include "common.frugal"
+
+namespace go example
+namespace java com.example
+
+const i32 VERSION = 1
+const string API_KEY = "secret-key-123"
+
+typedef i64 UserId (js.type="Long")
+
+enum Status {
+  ACTIVE = 1,
+  INACTIVE = 2
+}
+
+struct User {
+  1: required UserId id,
+  2: required string name,
+  3: optional Status status = Status.ACTIVE
+}
+
+exception NotFound {
+  1: string message
+} (code="404")
+
+service UserService extends BaseService {
+  User getUser(1: UserId id) throws (1: NotFound error),
+  oneway void deleteUser(1: UserId id)
+} (version="1.0")
+
+scope Events prefix "user.{id}" {
+  UserCreated: User,
+  UserDeleted: UserId (priority="high")
+}
