@@ -8,7 +8,7 @@
 <!-- [![crates][crates]](https://crates.io/crates/tree-sitter-frugal) -->
 <!-- [![pypi][pypi]](https://pypi.org/project/tree-sitter-frugal/) -->
 
-A Tree-sitter parser for frugal files.
+A Tree-sitter parser for frugal files. Frugal is a superset of thrift that was previously open-source. A semi-up-to-date fork can be found at https://github.com/charliestrawn/frugal. This project is just me playing around with claude and wanting to see how tree-sitter custom grammars work.
 
 ## References
 
