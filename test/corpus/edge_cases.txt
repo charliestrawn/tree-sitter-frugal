@@ -1,0 +1,157 @@
+==================
+All base types
+==================
+
+struct AllTypes {
+  1: bool boolField,
+  2: byte byteField,
+  3: i16 int16Field,
+  4: i32 int32Field,
+  5: i64 int64Field,
+  6: double doubleField,
+  7: string stringField,
+  8: binary binaryField
+}
+
+---
+
+(document
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier))))))
+
+==================
+Function with complex parameters and throws
+==================
+
+service ComplexService {
+  map<string, list<User>> getComplexData(
+    1: required string query,
+    2: optional i32 limit = 100,
+    3: list<string> filters
+  ) throws (
+    1: ValidationError validation,
+    2: TimeoutError timeout
+  ) (timeout="30000", retry="3")
+}
+
+---
+
+(document
+  (definition
+    (service_definition
+      (identifier)
+      (service_body
+        (function_definition
+          (function_type
+            (field_type
+              (container_type
+                (map_type
+                  (field_type (base_type))
+                  (field_type
+                    (container_type
+                      (list_type (field_type (identifier)))))))))
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_req)
+              (field_type (base_type))
+              (identifier)
+              (list_separator))
+            (field
+              (field_id (integer))
+              (field_req)
+              (field_type (base_type))
+              (identifier)
+              (const_value (integer))
+              (list_separator))
+            (field
+              (field_id (integer))
+              (field_type
+                (container_type
+                  (list_type (field_type (base_type)))))
+              (identifier)))
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (identifier))
+              (identifier)
+              (list_separator))
+            (field
+              (field_id (integer))
+              (field_type (identifier))
+              (identifier)))
+          (annotation
+            (annotation_list
+              (identifier)
+              (literal_string)
+              (list_separator)
+              (identifier)
+              (literal_string))))))))
+
+==================
+Annotation without values
+==================
+
+struct SimpleStruct (serializable) {
+  1: string name (indexed)
+}
+
+---
+
+(document
+  (definition
+    (struct_definition
+      (identifier)
+      (annotation
+        (annotation_list
+          (identifier)))
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (annotation
+            (annotation_list
+              (identifier))))))))

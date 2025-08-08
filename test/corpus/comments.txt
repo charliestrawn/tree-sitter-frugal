@@ -1,0 +1,65 @@
+==================
+Single line comments
+==================
+
+// This is a comment
+const i32 VALUE = 42
+// Another comment
+
+---
+
+(document
+  (comment)
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (integer))))
+  (comment))
+
+==================
+Multi-line comments
+==================
+
+/* This is a
+   multi-line comment */
+struct User {
+  1: string name
+}
+
+---
+
+(document
+  (comment)
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier))))))
+
+==================
+Mixed comments and code
+==================
+
+const i32 A = 1  // End of line comment
+/* Block comment */
+const i32 B = 2
+
+---
+
+(document
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (integer))))
+  (comment)
+  (comment)
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (integer)))))

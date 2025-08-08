@@ -181,7 +181,7 @@ scope UserEvents prefix "user.{userId}" {
           (field_type (identifier)))))))
 
 ==================
-Comments and documentation
+Service inheritance
 ==================
 
 service UserService {
@@ -313,3 +313,139 @@ const double SMALL = 4.56e-5
       (field_type (base_type))
       (identifier)
       (const_value (double)))))
+
+==================
+Enum with annotations and mixed separators
+==================
+
+enum Priority {
+  LOW = 1 (weight="low"),
+  MEDIUM = 2 (weight="medium");
+  HIGH = 3 (weight="high")
+} (deprecated="false")
+
+---
+
+(document
+  (definition
+    (enum_definition
+      (identifier)
+      (enum_body
+        (enum_field
+          (identifier)
+          (integer)
+          (annotation
+            (annotation_list
+              (identifier)
+              (literal_string)))
+          (list_separator))
+        (enum_field
+          (identifier)
+          (integer)
+          (annotation
+            (annotation_list
+              (identifier)
+              (literal_string)))
+          (list_separator))
+        (enum_field
+          (identifier)
+          (integer)
+          (annotation
+            (annotation_list
+              (identifier)
+              (literal_string)))))
+      (annotation
+        (annotation_list
+          (identifier)
+          (literal_string))))))
+
+==================
+Empty containers and complex const values
+==================
+
+const list<string> EMPTY_LIST = []
+const map<string, i32> EMPTY_MAP = {}
+const UserStatus DEFAULT_STATUS = UserStatus.ACTIVE
+
+---
+
+(document
+  (definition
+    (const_definition
+      (field_type
+        (container_type
+          (list_type (field_type (base_type)))))
+      (identifier)
+      (const_value (const_list))))
+  (definition
+    (const_definition
+      (field_type
+        (container_type
+          (map_type
+            (field_type (base_type))
+            (field_type (base_type)))))
+      (identifier)
+      (const_value (const_map))))
+  (definition
+    (const_definition
+      (field_type (identifier))
+      (identifier)
+      (const_value (identifier)))))
+
+==================
+Functions with no parameters and void return
+==================
+
+service SystemService {
+  void reset(),
+  string getVersion()
+}
+
+---
+
+(document
+  (definition
+    (service_definition
+      (identifier)
+      (service_body
+        (function_definition
+          (function_type)
+          (identifier)
+          (list_separator))
+        (function_definition
+          (function_type (field_type (base_type)))
+          (identifier))))))
+
+==================
+Multiple annotations
+==================
+
+struct User {
+  1: string name (validation="required", max_length="100")
+} (table="users", cache="true")
+
+---
+
+(document
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (annotation
+            (annotation_list
+              (identifier)
+              (literal_string)
+              (list_separator)
+              (identifier)
+              (literal_string)))))
+      (annotation
+        (annotation_list
+          (identifier)
+          (literal_string)
+          (list_separator)
+          (identifier)
+          (literal_string))))))

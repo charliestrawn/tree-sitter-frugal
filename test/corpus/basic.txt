@@ -101,6 +101,62 @@ struct User {
           (identifier))))))
 
 ==================
+Multiple namespaces
+==================
+
+namespace go example.user
+namespace java com.example.user
+namespace * example
+
+---
+
+(document
+  (header (namespace (namespace_scope) (identifier)))
+  (header (namespace (namespace_scope) (identifier)))
+  (header (namespace (namespace_scope) (identifier))))
+
+==================
+Binary type
+==================
+
+struct FileData {
+  1: binary content
+}
+
+---
+
+(document
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier))))))
+
+==================
+Negative numbers
+==================
+
+const i32 NEGATIVE = -42
+const double NEG_PI = -3.14159
+
+---
+
+(document
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (integer))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (double)))))
+
+==================
 Frugal scope
 ==================
 

@@ -869,8 +869,17 @@
           "value": "prefix"
         },
         {
-          "type": "SYMBOL",
-          "name": "literal_string"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "literal_string"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "identifier"
+            }
+          ]
         }
       ]
     },

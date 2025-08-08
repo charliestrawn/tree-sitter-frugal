@@ -115,6 +115,106 @@ scope DataEvents {
                 (field_type (identifier))))))))))
 
 ==================
+Scope with unquoted dotted prefix
+==================
+
+scope AlbumWinners prefix v1.music {
+  EventCreated: Event
+}
+
+---
+
+(document
+  (definition
+    (scope_definition
+      (identifier)
+      (scope_prefix (identifier))
+      (scope_body
+        (scope_operation
+          (identifier)
+          (field_type (identifier)))))))
+
+==================
+Scope with unquoted simple prefix
+==================
+
+scope MusicEvents prefix music {
+  SongPlayed: Song
+}
+
+---
+
+(document
+  (definition
+    (scope_definition
+      (identifier)
+      (scope_prefix (identifier))
+      (scope_body
+        (scope_operation
+          (identifier)
+          (field_type (identifier)))))))
+
+==================
+Scope with deeply nested dotted prefix
+==================
+
+scope DeepEvents prefix org.company.product.v2 {
+  DataProcessed: ProcessResult
+}
+
+---
+
+(document
+  (definition
+    (scope_definition
+      (identifier)
+      (scope_prefix (identifier))
+      (scope_body
+        (scope_operation
+          (identifier)
+          (field_type (identifier)))))))
+
+==================
+Scope with prefix containing underscores and numbers
+==================
+
+scope MetricsEvents prefix metrics_v2.user_123 {
+  MetricCollected: Metric
+}
+
+---
+
+(document
+  (definition
+    (scope_definition
+      (identifier)
+      (scope_prefix (identifier))
+      (scope_body
+        (scope_operation
+          (identifier)
+          (field_type (identifier)))))))
+
+==================
+Scope with templated prefix string
+==================
+
+scope UserEvents prefix "user.{userId}.events.{version}" {
+  ProfileUpdated: Profile
+}
+
+---
+
+(document
+  (definition
+    (scope_definition
+      (identifier)
+      (scope_prefix (literal_string))
+      (scope_body
+        (scope_operation
+          (identifier)
+          (field_type (identifier)))))))
+
+==================
 Empty scope
 ==================
 

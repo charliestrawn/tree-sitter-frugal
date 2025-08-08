@@ -183,7 +183,7 @@ module.exports = grammar({
 
     scope_prefix: $ => seq(
       'prefix',
-      $.literal_string,
+      choice($.literal_string, $.identifier),
     ),
 
     scope_body: $ => repeat1($.scope_operation),
