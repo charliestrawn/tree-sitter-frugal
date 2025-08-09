@@ -1,0 +1,214 @@
+==================
+Simple typedef
+==================
+
+typedef string UserId
+typedef map<string, string> Metadata
+typedef list<User> UserList
+
+struct User {
+  1: UserId id,
+  2: Metadata meta
+}
+
+---
+
+(document
+  (definition
+    (typedef_definition
+      (field_type (base_type))
+      (identifier)))
+  (definition
+    (typedef_definition
+      (field_type
+        (container_type
+          (map_type
+            (field_type (base_type))
+            (field_type (base_type)))))
+      (identifier)))
+  (definition
+    (typedef_definition
+      (field_type
+        (container_type
+          (list_type (field_type (identifier)))))
+      (identifier)))
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (identifier))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (identifier))
+          (identifier))))))
+
+==================
+Complex typedef chains
+==================
+
+typedef i64 Timestamp
+typedef map<string, Timestamp> EventLog
+typedef map<UserId, EventLog> UserEvents
+
+const UserEvents EMPTY_EVENTS = {}
+
+---
+
+(document
+  (definition
+    (typedef_definition
+      (field_type (base_type))
+      (identifier)))
+  (definition
+    (typedef_definition
+      (field_type
+        (container_type
+          (map_type
+            (field_type (base_type))
+            (field_type (identifier)))))
+      (identifier)))
+  (definition
+    (typedef_definition
+      (field_type
+        (container_type
+          (map_type
+            (field_type (identifier))
+            (field_type (identifier)))))
+      (identifier)))
+  (definition
+    (const_definition
+      (field_type (identifier))
+      (identifier)
+      (const_value (const_map)))))
+
+==================
+Namespace declarations
+==================
+
+namespace java com.example.types
+namespace py example_types
+namespace go example/types
+namespace js example.types
+namespace cpp example::types
+
+typedef string EntityId
+
+---
+
+(document
+  (namespace
+    (namespace_scope)
+    (identifier))
+  (namespace
+    (namespace_scope)
+    (identifier))
+  (namespace
+    (namespace_scope)
+    (identifier))
+  (namespace
+    (namespace_scope)
+    (identifier))
+  (namespace
+    (namespace_scope)
+    (identifier))
+  (definition
+    (typedef_definition
+      (field_type (base_type))
+      (identifier))))
+
+==================
+Namespace with wildcard
+==================
+
+namespace * com.example.shared
+
+enum Status {
+  ACTIVE = 1,
+  INACTIVE = 2,
+  DELETED = 3
+}
+
+---
+
+(document
+  (namespace
+    (namespace_scope)
+    (identifier))
+  (definition
+    (enum_definition
+      (identifier)
+      (enum_body
+        (enum_member
+          (identifier)
+          (integer)
+          (list_separator))
+        (enum_member
+          (identifier)
+          (integer)
+          (list_separator))
+        (enum_member
+          (identifier)
+          (integer))))))
+
+==================
+Typedef with annotations
+==================
+
+typedef binary UUID (size="16", format="uuid")
+typedef string Email (pattern="^[^@]+@[^@]+$", maxLength="256")
+
+struct Contact {
+  1: UUID id (indexed),
+  2: Email email (required, unique)
+}
+
+---
+
+(document
+  (definition
+    (typedef_definition
+      (field_type (base_type))
+      (identifier)
+      (annotation
+        (annotation_list
+          (identifier)
+          (literal_string)
+          (list_separator)
+          (identifier)
+          (literal_string)))))
+  (definition
+    (typedef_definition
+      (field_type (base_type))
+      (identifier)
+      (annotation
+        (annotation_list
+          (identifier)
+          (literal_string)
+          (list_separator)
+          (identifier)
+          (literal_string)))))
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (identifier))
+          (identifier)
+          (annotation
+            (annotation_list
+              (identifier)))
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (identifier))
+          (identifier)
+          (annotation
+            (annotation_list
+              (identifier)
+              (list_separator)
+              (identifier))))))))

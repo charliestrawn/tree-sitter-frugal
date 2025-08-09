@@ -1,0 +1,179 @@
+==================
+Simple union
+==================
+
+union SearchResult {
+  1: User user,
+  2: Group group,
+  3: Organization org
+}
+
+---
+
+(document
+  (definition
+    (union_definition
+      (identifier)
+      (union_body
+        (field
+          (field_id (integer))
+          (field_type (identifier))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (identifier))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (identifier))
+          (identifier))))))
+
+==================
+Exception definitions
+==================
+
+exception ValidationError {
+  1: string message,
+  2: i32 errorCode,
+  3: optional list<string> fieldErrors
+}
+
+exception TimeoutError {
+  1: string message = "Request timed out"
+}
+
+---
+
+(document
+  (definition
+    (exception_definition
+      (identifier)
+      (exception_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type
+            (container_type
+              (list_type (field_type (base_type)))))
+          (identifier)))))
+  (definition
+    (exception_definition
+      (identifier)
+      (exception_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (const_value (literal_string)))))))
+
+==================
+Service with exceptions
+==================
+
+service DataService {
+  User getUser(1: string userId) 
+    throws (
+      1: ValidationError validation,
+      2: TimeoutError timeout,
+      3: NotFoundError notFound
+    )
+  
+  void deleteUser(1: string userId) 
+    throws (1: ValidationError validation)
+}
+
+---
+
+(document
+  (definition
+    (service_definition
+      (identifier)
+      (service_body
+        (function_definition
+          (function_type (identifier))
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (base_type))
+              (identifier)))
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (identifier))
+              (identifier)
+              (list_separator))
+            (field
+              (field_id (integer))
+              (field_type (identifier))
+              (identifier)
+              (list_separator))
+            (field
+              (field_id (integer))
+              (field_type (identifier))
+              (identifier))))
+        (function_definition
+          (function_type (base_type))
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (base_type))
+              (identifier)))
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (identifier))
+              (identifier)))))))
+
+==================
+Union with annotations
+==================
+
+union ResponseData (serializable="json") {
+  1: SuccessResult success (cached="true"),
+  2: ErrorResult error,
+  3: RedirectResult redirect
+}
+
+---
+
+(document
+  (definition
+    (union_definition
+      (identifier)
+      (annotation
+        (annotation_list
+          (identifier)
+          (literal_string)))
+      (union_body
+        (field
+          (field_id (integer))
+          (field_type (identifier))
+          (identifier)
+          (annotation
+            (annotation_list
+              (identifier)
+              (literal_string)))
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (identifier))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (identifier))
+          (identifier))))))

@@ -1,0 +1,399 @@
+==================
+Deeply nested container types
+==================
+
+typedef map<string, list<set<User>>> UserGroupsByRegion
+typedef map<i32, map<string, list<Permission>>> RolePermissions
+typedef list<map<string, set<i64>>> ComplexStructure
+
+struct NestedData {
+  1: map<string, list<map<i32, set<string>>>> deepNesting,
+  2: list<map<string, map<string, list<User>>>> multiLevel,
+  3: set<list<map<string, i32>>> mixedContainers
+}
+
+---
+
+(document
+  (definition
+    (typedef_definition
+      (field_type
+        (container_type
+          (map_type
+            (field_type (base_type))
+            (field_type
+              (container_type
+                (list_type
+                  (field_type
+                    (container_type
+                      (set_type (field_type (identifier)))))))))))
+      (identifier)))
+  (definition
+    (typedef_definition
+      (field_type
+        (container_type
+          (map_type
+            (field_type (base_type))
+            (field_type
+              (container_type
+                (map_type
+                  (field_type (base_type))
+                  (field_type
+                    (container_type
+                      (list_type (field_type (identifier)))))))))))
+      (identifier)))
+  (definition
+    (typedef_definition
+      (field_type
+        (container_type
+          (list_type
+            (field_type
+              (container_type
+                (map_type
+                  (field_type (base_type))
+                  (field_type
+                    (container_type
+                      (set_type (field_type (base_type)))))))))))
+      (identifier)))
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type
+            (container_type
+              (map_type
+                (field_type (base_type))
+                (field_type
+                  (container_type
+                    (list_type
+                      (field_type
+                        (container_type
+                          (map_type
+                            (field_type (base_type))
+                            (field_type
+                              (container_type
+                                (set_type (field_type (base_type))))))))))))))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type
+            (container_type
+              (list_type
+                (field_type
+                  (container_type
+                    (map_type
+                      (field_type (base_type))
+                      (field_type
+                        (container_type
+                          (map_type
+                            (field_type (base_type))
+                            (field_type
+                              (container_type
+                                (list_type (field_type (identifier)))))))))))))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type
+            (container_type
+              (set_type
+                (field_type
+                  (container_type
+                    (list_type
+                      (field_type
+                        (container_type
+                          (map_type
+                            (field_type (base_type))
+                            (field_type (base_type)))))))))))
+          (identifier))))))
+
+==================
+Forward references
+==================
+
+struct Post {
+  1: string title,
+  2: User author,
+  3: list<Comment> comments
+}
+
+struct User {
+  1: string name,
+  2: list<Post> posts
+}
+
+struct Comment {
+  1: string content,
+  2: User author,
+  3: Post post,
+  4: optional Comment parentComment
+}
+
+---
+
+(document
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (identifier))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type
+            (container_type
+              (list_type (field_type (identifier)))))
+          (identifier)))))
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type
+            (container_type
+              (list_type (field_type (identifier)))))
+          (identifier)))))
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (identifier))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (identifier))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type (identifier))
+          (identifier))))))
+
+==================
+Complex service with nested generics
+==================
+
+service ComplexDataService {
+  map<string, list<UserGroup>> getUserGroups(
+    1: required string userId,
+    2: optional map<string, string> filters
+  ) throws (
+    1: ValidationError validation,
+    2: DataAccessError dataError
+  )
+  
+  list<map<string, set<Permission>>> getNestedPermissions(
+    1: list<RoleId> roleIds,
+    2: map<string, list<string>> context
+  )
+  
+  void updateComplexData(
+    1: map<EntityId, map<string, list<AttributeValue>>> updates
+  ) throws (1: ComplexUpdateError error)
+}
+
+---
+
+(document
+  (definition
+    (service_definition
+      (identifier)
+      (service_body
+        (function_definition
+          (function_type
+            (container_type
+              (map_type
+                (field_type (base_type))
+                (field_type
+                  (container_type
+                    (list_type (field_type (identifier))))))))
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_req)
+              (field_type (base_type))
+              (identifier)
+              (list_separator))
+            (field
+              (field_id (integer))
+              (field_req)
+              (field_type
+                (container_type
+                  (map_type
+                    (field_type (base_type))
+                    (field_type (base_type)))))
+              (identifier)))
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (identifier))
+              (identifier)
+              (list_separator))
+            (field
+              (field_id (integer))
+              (field_type (identifier))
+              (identifier))))
+        (function_definition
+          (function_type
+            (container_type
+              (list_type
+                (field_type
+                  (container_type
+                    (map_type
+                      (field_type (base_type))
+                      (field_type
+                        (container_type
+                          (set_type (field_type (identifier)))))))))))
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type
+                (container_type
+                  (list_type (field_type (identifier)))))
+              (identifier)
+              (list_separator))
+            (field
+              (field_id (integer))
+              (field_type
+                (container_type
+                  (map_type
+                    (field_type (base_type))
+                    (field_type
+                      (container_type
+                        (list_type (field_type (base_type))))))))
+              (identifier))))
+        (function_definition
+          (function_type (base_type))
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type
+                (container_type
+                  (map_type
+                    (field_type (identifier))
+                    (field_type
+                      (container_type
+                        (map_type
+                          (field_type (base_type))
+                          (field_type
+                            (container_type
+                              (list_type (field_type (identifier)))))))))))
+              (identifier)))
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (identifier))
+              (identifier)))))))
+
+==================
+Recursive type definitions
+==================
+
+struct TreeNode {
+  1: string value,
+  2: optional TreeNode left,
+  3: optional TreeNode right,
+  4: list<TreeNode> children
+}
+
+union JsonValue {
+  1: string stringVal,
+  2: i64 numberVal,
+  3: bool boolVal,
+  4: map<string, JsonValue> objectVal,
+  5: list<JsonValue> arrayVal
+}
+
+---
+
+(document
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type (identifier))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type (identifier))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type
+            (container_type
+              (list_type (field_type (identifier)))))
+          (identifier)))))
+  (definition
+    (union_definition
+      (identifier)
+      (union_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type
+            (container_type
+              (map_type
+                (field_type (base_type))
+                (field_type (identifier)))))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type
+            (container_type
+              (list_type (field_type (identifier)))))
+          (identifier))))))

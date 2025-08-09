@@ -1,0 +1,284 @@
+==================
+Empty constructs
+==================
+
+struct EmptyStruct {
+}
+
+service EmptyService {
+}
+
+enum EmptyEnum {
+}
+
+union EmptyUnion {
+}
+
+---
+
+(document
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body)))
+  (definition
+    (service_definition
+      (identifier)
+      (service_body)))
+  (definition
+    (enum_definition
+      (identifier)
+      (enum_body)))
+  (definition
+    (union_definition
+      (identifier)
+      (union_body))))
+
+==================
+Number formats
+==================
+
+const i32 DECIMAL = 42
+const i32 HEX_LOWER = 0x2a
+const i32 HEX_UPPER = 0X2A
+const i32 NEGATIVE = -123
+const double SCIENTIFIC = 1.23e-4
+const double SCIENTIFIC_POS = 1.23E+4
+const double DECIMAL_FLOAT = 3.14159
+const double NEGATIVE_FLOAT = -2.71828
+
+---
+
+(document
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (integer))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (integer))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (integer))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (integer))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (double))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (double))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (double))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (double)))))
+
+==================
+String escaping and unicode
+==================
+
+const string SIMPLE = "hello world"
+const string ESCAPED_QUOTES = "She said \"Hello\""
+const string ESCAPED_BACKSLASH = "Path: C:\\Users\\name"
+const string NEWLINES = "Line 1\nLine 2\r\nLine 3"
+const string UNICODE = "Hello 世界 🌍"
+const string UNICODE_ESCAPE = "Unicode: \u0041\u00E9\u4E16"
+const string TABS_AND_SPACES = "Tab:\tSpace: End"
+const string EMPTY = ""
+
+---
+
+(document
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (literal_string))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (literal_string))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (literal_string))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (literal_string))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (literal_string))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (literal_string))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (literal_string))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (literal_string)))))
+
+==================
+Unicode identifiers
+==================
+
+struct 用户 {
+  1: string 姓名,
+  2: i32 年龄
+}
+
+const string CAFÉ = "coffee"
+const string naïve_value = "test"
+
+---
+
+(document
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (literal_string))))
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (literal_string)))))
+
+==================
+Field requirement modifiers
+==================
+
+struct UserProfile {
+  1: required string userId,
+  2: optional string email,
+  3: string name,
+  4: required i64 createdAt = 0,
+  5: optional map<string, string> metadata = {}
+}
+
+---
+
+(document
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type (base_type))
+          (identifier)
+          (const_value (integer))
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type
+            (container_type
+              (map_type
+                (field_type (base_type))
+                (field_type (base_type)))))
+          (identifier)
+          (const_value (const_map)))))))
+
+==================
+Extreme whitespace variations
+==================
+
+struct    SpacedStruct   {
+  1:   required    string    name   ,
+  2  :  i32   value
+}
+
+service
+SpacedService
+{
+void
+method  (  )
+}
+
+---
+
+(document
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_req)
+          (field_type (base_type))
+          (identifier)
+          (list_separator))
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)))))
+  (definition
+    (service_definition
+      (identifier)
+      (service_body
+        (function_definition
+          (function_type (base_type))
+          (identifier)
+          (field_list))))))

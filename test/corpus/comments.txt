@@ -41,6 +41,125 @@ struct User {
           (identifier))))))
 
 ==================
+Multiline comments with various spacing
+==================
+
+/*No spaces around content*/
+const i32 A = 1
+
+/*  Spaces before content  */
+const i32 B = 2
+
+/*
+Empty line at start
+
+And content after
+*/
+const i32 C = 3
+
+/*
+  Consistent indentation
+  across multiple lines
+  with proper alignment
+*/
+
+/* Inline comment */ const i32 D = 4
+
+/*
+No trailing spaces on this line
+    But tabs and spaces mixed here	
+        Deep indentation here
+*/
+
+---
+
+(document
+  (comment)
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (integer))))
+  (comment)
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (integer))))
+  (comment)
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (integer))))
+  (comment)
+  (comment)
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (integer))))
+  (comment))
+
+==================
+Enhanced annotations (Frugal-specific)
+==================
+
+/**@
+ * Enhanced annotation with description
+ * @param userId The user identifier
+ * @returns User profile data
+ */
+struct UserProfile {
+  1: string userId
+}
+
+/**@ Single line enhanced annotation */
+service UserService {
+  UserProfile getUser(1: string id)
+}
+
+/**@
+ * Multi-line enhanced annotation
+ * with various formatting
+ *
+ * @deprecated Use UserServiceV2 instead
+ */
+const string VERSION = "1.0"
+
+---
+
+(document
+  (enhanced_comment)
+  (definition
+    (struct_definition
+      (identifier)
+      (struct_body
+        (field
+          (field_id (integer))
+          (field_type (base_type))
+          (identifier)))))
+  (enhanced_comment)
+  (definition
+    (service_definition
+      (identifier)
+      (service_body
+        (function_definition
+          (function_type (identifier))
+          (identifier)
+          (field_list
+            (field
+              (field_id (integer))
+              (field_type (base_type))
+              (identifier)))))))
+  (enhanced_comment)
+  (definition
+    (const_definition
+      (field_type (base_type))
+      (identifier)
+      (const_value (literal_string)))))
+
+==================
 Mixed comments and code
 ==================
 
