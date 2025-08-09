@@ -16,10 +16,10 @@ module.exports = grammar({
   ],
 
   rules: {
-    document: $ => repeat(choice(
-      $.header,
-      $.definition,
-    )),
+    document: $ => seq(
+      repeat($.header),
+      repeat($.definition),
+    ),
 
     // Headers
     header: $ => choice(

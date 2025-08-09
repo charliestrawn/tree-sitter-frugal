@@ -3,20 +3,23 @@
   "name": "frugal",
   "rules": {
     "document": {
-      "type": "REPEAT",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "REPEAT",
+          "content": {
             "type": "SYMBOL",
             "name": "header"
-          },
-          {
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
             "type": "SYMBOL",
             "name": "definition"
           }
-        ]
-      }
+        }
+      ]
     },
     "header": {
       "type": "CHOICE",
